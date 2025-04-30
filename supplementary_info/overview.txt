@@ -1,0 +1,12 @@
+ds1
+  MA
+  MG
+  LA
+ds2
+  MA
+  MG
+  LA
+ds3
+  MA
+  MG
+  LA
