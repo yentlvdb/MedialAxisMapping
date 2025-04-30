@@ -22,51 +22,51 @@ class Graph:
         return list(combinations([node['index'] for node in node_indices], 3))
       
     def count_edges_in_subset(self, subset): # uit de class?
-          """
-          Counts the number of edges present between the nodes in the given subset.
+        """
+        Counts the number of edges present between the nodes in the given subset.
   
-          Args:
-              subset: A tuple of three node indices.
+        Args:
+            subset: A tuple of three node indices.
   
-          Returns:
-              The number of edges present within the subset.
-          """
-          edge_count = 0
-          for edge in self.edges:
+        Returns:
+            The number of edges present within the subset.
+        """
+        edge_count = 0
+        for edge in self.edges:
               if edge[0] in subset and edge[1] in subset:
                   edge_count += 1
-          return edge_count
+        return edge_count
   
-      def permutations_subset(self, subset, permutation_type):
-          """
-          Generate permutations of a subset of nodes based on their internal connectivity (edges),
-          with different behavior depending on the specified mode (`type`).
+    def permutations_subset(self, subset, permutation_type):
+        """
+        Generate permutations of a subset of nodes based on their internal connectivity (edges),
+        with different behavior depending on the specified mode (`type`).
       
-          Args:
-              subset (list): A list of nodes (typically 3 elements) to generate permutations for.
-              type (bool): 
+        Args:
+            subset (list): A list of nodes (typically 3 elements) to generate permutations for.
+            type (bool): 
                   - If True (LM image): Return all valid permutations according to connectivity rules (permutation mode).
                   - If False (EM image): Return fixed arrangements (non-permutation mode).
       
-          Returns:
-              list: A list of permutations or fixed sequences depending on the input parameters.
-          """
-          to_count = []
-          for edge in self.edges:
+        Returns:
+            list: A list of permutations or fixed sequences depending on the input parameters.
+        """
+        to_count = []
+        for edge in self.edges:
               if edge[0] in subset and edge[1] in subset:
                   to_count.extend(edge)
       
-          if not to_count:
+        if not to_count:
               return list(permutations(subset)) if permutation_type else [tuple(subset)] * 6
       
-          if len(to_count) == 2:
+        if len(to_count) == 2:
               fixed_nr = (set(subset) - set(to_count)).pop()
               if permutation_type:
                   return [[fixed_nr] + list(p) for p in permutations(to_count)]
               else:
                   return [(fixed_nr, to_count[0], to_count[1])] * 2
       
-          if len(to_count) == 4:
+        if len(to_count) == 4:
               count = Counter(to_count)
               fixed_nr = [k for k, v in count.items() if v == 2][0]
               other_nrs = list(set(to_count) - {fixed_nr})
